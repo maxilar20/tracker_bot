@@ -25,10 +25,6 @@
 
     <arg name="teleop_args" default="-rc" />
 
-	<node pkg="joy" type="joy_node" name="joy" required="True">
-		<param name="autorepeat_rate" value="5" /> <!-- Minimal update rate, Hz -->
-	</node>
-
 	<node pkg="mavros_extras" type="mavteleop" name="mavteleop" args="$(arg teleop_args)" required="True" output="screen">
 		<rosparam command="load" file="$(find mavros_extras)/launch/f710_joy.yaml" />
 	</node>

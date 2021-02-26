@@ -1,0 +1,13 @@
+<launch>
+	<!-- vim: set ft=xml noet : -->
+	<!-- mavteleop example launch script -->
+
+	<!-- <include file="$(find mavros)/launch/px4.launch" /> -->
+
+	<arg name="teleop_args" default="-rc" />
+
+	<node pkg="joy" type="joy_node" name="joy" required="True">
+		<param name="autorepeat_rate" value="5" /> <!-- Minimal update rate, Hz -->
+	</node>
+
+</launch>
