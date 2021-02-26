@@ -3,7 +3,7 @@
 	<!-- example launch script for PX4 based FCU's -->
 
 	<arg name="fcu_url" default="/dev/ttyACM0:57600" />
-	<arg name="gcs_url" default="udp://@10.0.0.79" />
+	<arg name="gcs_url" default="udp://@10.0.0.7" />
 	<arg name="tgt_system" default="1" />
 	<arg name="tgt_component" default="1" />
 	<arg name="log_output" default="screen" />
@@ -22,4 +22,14 @@
 		<arg name="fcu_protocol" value="$(arg fcu_protocol)" />
 		<arg name="respawn_mavros" default="$(arg respawn_mavros)" />
 	</include>
+
+    <arg name="teleop_args" default="-rc" />
+
+	<node pkg="joy" type="joy_node" name="joy" required="True">
+		<param name="autorepeat_rate" value="5" /> <!-- Minimal update rate, Hz -->
+	</node>
+
+	<node pkg="mavros_extras" type="mavteleop" name="mavteleop" args="$(arg teleop_args)" required="True" output="screen">
+		<rosparam command="load" file="$(find mavros_extras)/launch/f710_joy.yaml" />
+	</node>
 </launch>
