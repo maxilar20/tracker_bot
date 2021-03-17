@@ -3,7 +3,7 @@
     At development stage, each node should be launched in a separated terminal to view the output -->
 
     <arg name="fcu_url" default="/dev/ttyACM0:57600" />
-	<arg name="gcs_url" default="udp://@10.0.0.79" />
+	<arg name="gcs_url" default="udp://@10.0.0.7" />
 	<arg name="tgt_system" default="1" />
 	<arg name="tgt_component" default="1" />
 	<arg name="log_output" default="screen" />
