@@ -23,13 +23,4 @@
 		<arg name="fcu_protocol" value="$(arg fcu_protocol)" />
 		<arg name="respawn_mavros" default="$(arg respawn_mavros)" />
 	</include>
-
-	<node pkg="joy" type="joy_node" name="joy" required="True">
-		<param name="autorepeat_rate" value="30" /> <!-- Minimal update rate, Hz -->
-		<param name="dev" value="/dev/input/js4" />
-	</node>
-
-	<node pkg="mavros_extras" type="mavteleop" name="mavteleop" args="$(arg teleop_args)" required="True" output="screen">
-		<rosparam command="load" file="$(find mavros_extras)/launch/f710_joy.yaml" />
-	</node>
 </launch>
