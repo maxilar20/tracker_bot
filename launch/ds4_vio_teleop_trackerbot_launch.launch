@@ -10,6 +10,9 @@
 	<arg name="fcu_protocol" default="v2.0" />
 	<arg name="respawn_mavros" default="false" />
 	<arg name="teleop_args" default="-rc" />
+	<arg name="addr" default="" />
+  	<arg name="use_standard_msgs" default="true" />
+  	<arg name="autorepeat_rate" default="20" if="$(arg use_standard_msgs)" />	
 
     <!-- This node will launch the ROS driver for Realsense T265 -->
     <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
@@ -31,10 +34,13 @@
     <!-- This node will launch the node that bridges realsense-ros and MAVROS -->
     <include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch"/>
 
-    <node pkg="joy" type="joy_node" name="joy" required="True">
-		<param name="autorepeat_rate" value="30" /> <!-- Minimal update rate, Hz -->
-		<param name="dev" value="/dev/input/js0" />
-	</node>
+    <node pkg="ds4_driver" type="ds4_driver_node.py" name="ds4_driver" output="screen" >
+		<rosparam command="load" file="$(find ds4_driver)/config/params.yaml" />
+
+		<param name="device_addr" value="$(arg addr)" />
+		<param name="use_standard_msgs" value="$(arg use_standard_msgs)" />
+		<param name="autorepeat_rate" value="$(arg autorepeat_rate)" if="$(arg use_standard_msgs)" />
+ 	</node>
 
 	<node pkg="mavros_extras" type="mavteleop" name="mavteleop" args="$(arg teleop_args)" required="True" output="screen">
 		<rosparam command="load" file="$(find mavros_extras)/launch/f710_joy.yaml" />
