@@ -57,5 +57,5 @@
 		</node>
 	</group>
 
-  	<node machine=laptop type="rviz" name="rviz" pkg="rviz" />
+  	<node machine='laptop' type="rviz" name="rviz" pkg="rviz" />
 </launch>
