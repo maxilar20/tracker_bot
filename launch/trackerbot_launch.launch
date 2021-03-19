@@ -5,7 +5,7 @@
 	<arg name="gamepad" default="true" />
 	<arg name="ps4" default="false" />
     <arg name="fcu_url" default="/dev/ttyACM0:57600" />
-	<arg name="gcs_url" default="udp://@192.168.138" />
+	<arg name="gcs_url" default="udp://@192.168.13.8" />
 	<arg name="tgt_system" default="1" />
 	<arg name="tgt_component" default="1" />
 	<arg name="log_output" default="screen" />
