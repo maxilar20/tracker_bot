@@ -16,6 +16,8 @@
   	<arg name="use_standard_msgs" default="true" />
   	<arg name="autorepeat_rate" default="20" if="$(arg use_standard_msgs)" />	
 
+	<machine name="laptop" address="192.168.1.38" env-loader="/opt/ros/fuerte/env.sh"/>
+
     <!-- This node will launch the ROS driver for Realsense T265 -->
     <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
 
@@ -54,4 +56,6 @@
 			<rosparam command="load" file="$(find mavros_extras)/launch/f710_joy.yaml" />
 		</node>
 	</group>
+
+  	<node machine=laptop type="rviz" name="rviz" pkg="rviz" />
 </launch>
