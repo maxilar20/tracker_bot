@@ -18,8 +18,8 @@
   	<arg name="autorepeat_rate" default="20" if="$(arg use_standard_msgs)" />	
 
     <!-- This node will launch the ROS driver for Realsense T265 -->
-    <include file="$(find realsense2_camera)/launch/rs_d400_and_t265.launch" if="$arg mapping" />
-	<include file="$(find rtabmap_ros)/launch/rtabmap.launch" if="$arg mapping"> 
+    <include file="$(find realsense2_camera)/launch/rs_d400_and_t265.launch" if="$(arg mapping)" />
+	<include file="$(find rtabmap_ros)/launch/rtabmap.launch" if="$(arg mapping)"> 
 		<arg name="args" value="-d --Mem/UseOdomGravity true --Optimizer/GravitySigma 0.3" />
 		<arg name="odom_topic" value="/t265/odom/sample" />
 		<arg name="frame_id" value="t265_link" />
@@ -31,7 +31,7 @@
 		<arg name="visual_odometry" value="false" />
 	</include>
 
-	<include file="$(find realsense2_camera)/launch/rs_t265.launch" unless="$arg mapping" />
+	<include file="$(find realsense2_camera)/launch/rs_t265.launch" unless="$(arg mapping)" />
 
     <!-- This node will launch MAVROS -->
     <include file="$(find mavros)/launch/node.launch">
