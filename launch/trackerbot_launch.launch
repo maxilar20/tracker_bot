@@ -2,6 +2,7 @@
     <!-- Launch 3 nodes as below
     At development stage, each node should be launched in a separated terminal to view the output -->
 
+	<arg name="mapping" default="true" />
 	<arg name="gamepad" default="true" />
 	<arg name="ps4" default="false" />
     <arg name="fcu_url" default="/dev/ttyACM0:57600" />
@@ -17,7 +18,20 @@
   	<arg name="autorepeat_rate" default="20" if="$(arg use_standard_msgs)" />	
 
     <!-- This node will launch the ROS driver for Realsense T265 -->
-    <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
+    <include file="$(find realsense2_camera)/launch/rs_d400_and_t265.launch" if="$arg mapping" />
+	<include file="$(find rtabmap_ros)/launch/rtabmap.launch" if="$arg mapping"> 
+		<arg name="args" value="-d --Mem/UseOdomGravity true --Optimizer/GravitySigma 0.3" />
+		<arg name="odom_topic" value="/t265/odom/sample" />
+		<arg name="frame_id" value="t265_link" />
+		<arg name="rgbd_sync" value="true" />
+		<arg name="depth_topic" value="/d400/aligned_depth_to_color/image_raw" />
+		<arg name="rgb_topic" value="/d400/color/image_raw" />
+		<arg name="camera_info_topic" value="/d400/color/camera_info" />
+		<arg name="approx_rgbd_sync" value="false" />
+		<arg name="visual_odometry" value="false" />
+	</include>
+
+	<include file="$(find realsense2_camera)/launch/rs_t265.launch" unless="$arg mapping" />
 
     <!-- This node will launch MAVROS -->
     <include file="$(find mavros)/launch/node.launch">
@@ -54,5 +68,7 @@
 			<rosparam command="load" file="$(find mavros_extras)/launch/f710_joy.yaml" />
 		</node>
 	</group>
+
+	
 
 </launch>
