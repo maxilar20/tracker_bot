@@ -5,7 +5,7 @@
 	<arg name="mapping" default="true" />
 	<arg name="gamepad" default="true" />
 	<arg name="ps4" default="false" />
-    <arg name="fcu_url" default="/dev/ttyACM0:57600" />
+  <arg name="fcu_url" default="/dev/ttyACM0:57600" />
 	<arg name="gcs_url" default="udp://@10.0.0.7" />
 	<arg name="tgt_system" default="1" />
 	<arg name="tgt_component" default="1" />
@@ -14,15 +14,15 @@
 	<arg name="respawn_mavros" default="true" />
 	<arg name="teleop_args" default="-rc" />
 	<arg name="addr" default="" />
-  	<arg name="use_standard_msgs" default="true" />
-  	<arg name="autorepeat_rate" default="20" if="$(arg use_standard_msgs)" />	
+	<arg name="use_standard_msgs" default="true" />
+	<arg name="autorepeat_rate" default="20" if="$(arg use_standard_msgs)" />
 
-    <!-- This node will launch the ROS driver for Realsense T265 -->
-    <include file="$(find realsense2_camera)/launch/rs_d400_and_t265.launch"  if="$(arg mapping)" >
-		<arg name="device_type_camera2" value="d435"/> 
+  <!-- This node will launch the ROS driver for Realsense T265 -->
+  <include file="$(find realsense2_camera)/launch/rs_d400_and_t265.launch"  if="$(arg mapping)" >
+		<arg name="device_type_camera2" value="d435"/>
 	</include>
 
-	<include file="$(find rtabmap_ros)/launch/rtabmap.launch" if="$(arg mapping)"> 
+	<include file="$(find rtabmap_ros)/launch/rtabmap.launch" if="$(arg mapping)">
 		<arg name="args" value="-d --Mem/UseOdomGravity true --Optimizer/GravitySigma 0.3" />
 		<arg name="odom_topic" value="/t265/odom/sample" />
 		<arg name="frame_id" value="t265_link" />
@@ -37,7 +37,7 @@
 	<include file="$(find realsense2_camera)/launch/rs_t265.launch" unless="$(arg mapping)" />
 
     <!-- This node will launch MAVROS -->
-    <include file="$(find mavros)/launch/node.launch">
+  <include file="$(find mavros)/launch/node.launch">
 		<arg name="pluginlists_yaml" value="$(find mavros)/launch/px4_pluginlists.yaml" />
 		<arg name="config_yaml" value="$(find mavros)/launch/px4_config.yaml" />
 
@@ -50,8 +50,10 @@
 		<arg name="respawn_mavros" default="$(arg respawn_mavros)" />
 	</include>
 
-    <!-- This node will launch the node that bridges realsense-ros and MAVROS -->
-    <include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch"/>
+  <!-- This node will launch the node that bridges realsense-ros and MAVROS -->
+  <include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch">
+		<arg name="target_frame_id" value="/t265_odom_frame" />
+	</include>
 
 	<group if="$(arg gamepad)">
 		<node pkg="ds4_driver" type="ds4_driver_node.py" name="ds4_driver" output="screen" if="$(arg ps4)">
@@ -61,7 +63,7 @@
 			<param name="use_standard_msgs" value="$(arg use_standard_msgs)" />
 			<param name="autorepeat_rate" value="$(arg autorepeat_rate)" if="$(arg use_standard_msgs)" />
 		</node>
-		
+
 		<node pkg="joy" type="joy_node" name="joy" required="True" unless="$(arg ps4)">
 			<param name="autorepeat_rate" value="30" /> <!-- Minimal update rate, Hz -->
 			<param name="dev" value="/dev/input/js0" />
@@ -72,6 +74,6 @@
 		</node>
 	</group>
 
-	
+
 
 </launch>
