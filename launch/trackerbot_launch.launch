@@ -5,7 +5,7 @@
 	<arg name="gamepad" default="true" />
 	<arg name="ps4" default="false" />
     <arg name="fcu_url" default="/dev/ttyACM0:57600" />
-	<arg name="gcs_url" default="udp://@192.168.1.38" />
+	<arg name="gcs_url" default="udp://@10.0.0.7" />
 	<arg name="tgt_system" default="1" />
 	<arg name="tgt_component" default="1" />
 	<arg name="log_output" default="screen" />
@@ -15,8 +15,6 @@
 	<arg name="addr" default="" />
   	<arg name="use_standard_msgs" default="true" />
   	<arg name="autorepeat_rate" default="20" if="$(arg use_standard_msgs)" />	
-
-	<machine name="laptop" address="192.168.1.38" env-loader="/opt/ros/fuerte/env.sh"/>
 
     <!-- This node will launch the ROS driver for Realsense T265 -->
     <include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
@@ -57,5 +55,4 @@
 		</node>
 	</group>
 
-  	<node machine='laptop' type="rviz" name="rviz" pkg="rviz" />
 </launch>
