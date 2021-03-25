@@ -34,7 +34,7 @@
 	<arg name="clip_distance"             default="-2"/>
 	<arg name="topic_odom_in"             default="odom_in"/>
 	<arg name="calib_odom_file"           default=""/>
-	<arg name="publish_odom_tf"     default="true"/>
+	<arg name="publish_odom_tf"     		default="true"/>
 
   <!-- This node will launch the ROS driver for Realsense T265 -->
   <group ns="$(arg camera1)">
@@ -100,7 +100,7 @@
 
   <!-- This node will launch the node that bridges realsense-ros and MAVROS -->
   <include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch">
-		<arg name="target_frame_id" value="/t265_odom_frame" />
+		<arg name="target_frame_id" value="/t265_link" />
 	</include>
 
 	<group if="$(arg gamepad)">
