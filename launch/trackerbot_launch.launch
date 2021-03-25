@@ -34,6 +34,7 @@
 	<arg name="clip_distance"             default="-2"/>
 	<arg name="topic_odom_in"             default="odom_in"/>
 	<arg name="calib_odom_file"           default=""/>
+	<arg name="publish_odom_tf"     default="true"/>
 
   <!-- This node will launch the ROS driver for Realsense T265 -->
   <group ns="$(arg camera1)">
