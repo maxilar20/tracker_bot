@@ -100,7 +100,7 @@
 
   <!-- This node will launch the node that bridges realsense-ros and MAVROS -->
   <include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch">
-		<arg name="target_frame_id" value="/camera_odom_link" />
+		<arg name="target_frame_id" value="/t265_odom_link" />
 		<arg name="source_frame_id"   value="/t265_link" />
 	</include>
 
