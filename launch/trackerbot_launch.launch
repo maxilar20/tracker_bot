@@ -78,7 +78,7 @@
 		<arg name="depth_topic" value="/d400/aligned_depth_to_color/image_raw" />
 		<arg name="rgb_topic" value="/d400/color/image_raw" />
 		<arg name="camera_info_topic" value="/d400/color/camera_info" />
-		<arg name="approx_rgbd_sync" value="false" />
+		<arg name="approx_rgbd_sync" value="true" />
 		<arg name="visual_odometry" value="false" />
 	</include>
 
