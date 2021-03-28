@@ -11,7 +11,7 @@
     <arg name="camera1"              			default="t265"/>		<!-- Note: Replace with camera name -->
     <arg name="camera2"              			default="d400"/>		<!-- Note: Replace with camera name -->
     <arg name="clip_distance"             default="-2"/>
-    <arg name="use_rviz"                  default="true"/>
+    <arg name="use_rviz"                  default="false"/>
     <arg name="use_rtabmapviz"            default="false"/>
     
 
@@ -27,7 +27,7 @@
     </include>
 
     <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
-            <arg name="rtabmap_args"       value="--delete_db_on_start"/>
+            <arg name="rtabmap_args"       value="--delete_db_on_start --Vis/MaxFeatures 500 --Mem/ImagePreDecimation 2 --Mem/ImagePostDecimation 2 --Kp/DetectorStrategy 6 --OdomF2M/MaxSize 1000 --Odom/ImageDecimation 2"/>
             <arg name="depth_topic"        value="/$(arg camera2)/aligned_depth_to_color/image_raw"/>
             <arg name="frame_id"           value="$(arg camera2)_link"/>
             <arg name="visual_odometry"    value="false"/>
