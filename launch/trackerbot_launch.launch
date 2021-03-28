@@ -16,7 +16,7 @@
   	<arg name="use_standard_msgs" default="true" />
   	<arg name="autorepeat_rate" default="20" if="$(arg use_standard_msgs)" />	
 
-	  <arg name="device_type_camera1"    		default="t265"/>
+	<arg name="device_type_camera1"    		default="t265"/>
 	<arg name="device_type_camera2"    		default="d4.5"/>		<!-- Note: using regular expression. match D435, D435i, D415... -->
 	<arg name="serial_no_camera1"    			default=""/>
 	<arg name="serial_no_camera2"    			default=""/>
@@ -35,6 +35,9 @@
 	<arg name="calib_odom_file"           default=""/>
 	<arg name="depth_fps"           		default="6"/>
   	<arg name="color_fps"           		default="6"/>	
+
+	<arg name="use_rviz"                  default="false"/>
+	<arg name="use_rtabmapviz"            default="false"/>
 
 	<!-- This node will launch the ROS driver for Realsense T265 -->
 	<include file="$(find realsense2_camera)/launch/rs_t265.launch"/>
