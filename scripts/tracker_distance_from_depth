@@ -1,27 +1,5 @@
 #!/usr/bin/env python2
 
-""" cv_bridge_demo.py - Version 0.1 2011-05-29
-
-    A ROS-to-OpenCV node that uses cv_bridge to map a ROS image topic and optionally a ROS
-    depth image topic to the equivalent OpenCV image stream(s).
-    
-    Created for the Pi Robot Project: http://www.pirobot.org
-    Copyright (c) 2011 Patrick Goebel.  All rights reserved.
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-    
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details at:
-    
-    http://www.gnu.org/licenses/gpl.html
-      
-"""
-
 import roslib
 import rospy
 import sys
@@ -41,6 +19,9 @@ class cvBridgeDemo():
                 
         # Create the cv_bridge object
         self.bridge = CvBridge()
+
+        self.x_percent = 0.30
+        self.y_percent = 0.30
         
         # Subscribe to the camera image and depth topics and set
         # the appropriate callbacks
@@ -53,12 +34,13 @@ class cvBridgeDemo():
         # The depth image is a single-channel float32 image
         depth_image = self.bridge.imgmsg_to_cv2(ros_image)
         np_image = np.array(depth_image)
-        x_percent = 0.30
-        y_percent = 0.30
-        min_x = int(np_image.shape[0]*x_percent)
-        max_x = int(np_image.shape[0]*(1-x_percent))
-        min_y = int(np_image.shape[1]*y_percent)
-        max_y = int(np_image.shape[1]*(1-y_percent))
+        
+
+        
+        min_x = int(np_image.shape[0]*self.x_percent)
+        max_x = int(np_image.shape[0]*(1-self.x_percent))
+        min_y = int(np_image.shape[1]*self.y_percent)
+        max_y = int(np_image.shape[1]*(1-self.y_percent))
         
         #print(min_x, max_x, min_y, max_y)
         
