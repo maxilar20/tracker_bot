@@ -64,7 +64,7 @@
 		<node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="0 0 0 0 0 0 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 100"/>
 
 		<include file="$(find rtabmap_ros)/launch/rtabmap.launch">
-						<arg name="rtabmap_args"       value="--delete_db_on_start --Vis/MinInliers 100 --Vis/MaxFeatures 500 --Mem/ImagePreDecimation 2 --Mem/ImagePostDecimation 2 --Kp/DetectorStrategy 6 --OdomF2M/MaxSize 1000 --Odom/ImageDecimation 2"/>
+						<arg name="rtabmap_args"       value="--delete_db_on_start--Vis/MaxFeatures 300 --Mem/ImagePreDecimation 2 --Mem/ImagePostDecimation 2 --Kp/DetectorStrategy 6 --OdomF2M/MaxSize 800 --Odom/ImageDecimation 2"/>
 						<arg name="depth_topic"        value="/$(arg camera2)/aligned_depth_to_color/image_raw"/>
 						<arg name="frame_id"           value="$(arg camera2)_link"/>
 						<arg name="visual_odometry"    value="false"/>
