@@ -79,7 +79,7 @@
 			<arg name="rviz"               value="$(arg use_rviz)"/>
 			<arg name="rtabmapviz"         value="$(arg use_rtabmapviz)"/>
 		</include>
-		<include file="$(find rtabmap_ros)/launch/rtabmap.launch" unless="$(arg remote_msapping)">
+		<include file="$(find rtabmap_ros)/launch/rtabmap.launch" unless="$(arg remote_mapping)">
 			<arg name="rtabmap_args"       value="--delete_db_on_start --Vis/MaxFeatures 300 --Mem/ImagePreDecimation 2 --Mem/ImagePostDecimation 2 --Kp/DetectorStrategy 6 --OdomF2M/MaxSize 800 --Odom/ImageDecimation 2"/>
 			<arg name="depth_topic"        value="/$(arg camera2)/aligned_depth_to_color/image_raw"/>
 			<arg name="frame_id"           value="$(arg camera2)_link"/>
