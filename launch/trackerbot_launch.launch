@@ -93,6 +93,12 @@
 		</include>
 	</group>
 
+	<node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
+		<remap from="/image" to="/$(arg camera2)/aligned_depth_to_color/image_raw"/>
+		<remap from="/camera_info" to="/$(arg camera2)/color/camera_info"/>
+		<param name="output_frame_id" 	value="$(arg camera2)_link"/>
+	</node>
+
 	<!-- This node will launch MAVROS -->
 	<include file="$(find mavros)/launch/node.launch">
 		<remap from="/mavros/obstacle/send" to="/scan"/>
@@ -110,12 +116,6 @@
 
 	<!-- This node will launch the node that bridges realsense-ros and MAVROS -->
 	<include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch"/>
-
-	<node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
-		<remap from="/image" to="/$(arg camera2)/aligned_depth_to_color/image_raw"/>
-		<remap from="/camera_info" to="/$(arg camera2)/color/camera_info"/>
-		<param name="output_frame_id" 	value="$(arg camera2)_link"/>
-	</node>
 
 	<!-- Group that runs only if gamepad is true to control from a gamepad -->
 	<group if="$(arg gamepad)">
