@@ -109,6 +109,12 @@
 	<!-- This node will launch the node that bridges realsense-ros and MAVROS -->
 	<include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch"/>
 
+	<include file="$(find depthimage_to_laserscan)/launch/t265_tf_to_mavros.launch">
+		<remap from="/image" to="/$(arg camera2)/aligned_depth_to_color/image_raw"/>
+		<remap from="/camera_info" to="/$(arg camera2)/color/camera_info"/>
+		<param name="output_frame_id" 	value="$(arg camera2)_link"/>
+	</include>
+
 	<!-- Group that runs only if gamepad is true to control from a gamepad -->
 	<group if="$(arg gamepad)">
 		<node pkg="ds4_driver" type="ds4_driver_node.py" name="ds4_driver" output="screen" if="$(arg ps4)">
