@@ -6,6 +6,7 @@ import sys
 import cv2
 from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
+from mavros_msgs.srv import *
 import numpy as np
 
 class cvBridgeDemo():
@@ -46,7 +47,25 @@ class cvBridgeDemo():
         
         np_region = np_image[min_x:max_x, min_y:max_y]
         #print(np_region.shape)
-        print("distance: " + str(np.min(np_region[np_region > 0])/1000.0) + " m")
+        distance = np.min(np_region[np_region > 0])/1000.0
+        print("distance: " + str(distance) + " m")
+
+        rospy.wait_for_service('/mavros/set_mode')
+        print("hello")
+        if distance < 1:
+            try:
+                flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
+                isModeChanged = flightModeService(custom_mode='BRAKE') #return true or false
+                print("set")
+                print(isModeChanged)
+            except rospy.ServiceException, e:
+                print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
+        else:
+            try:
+                flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
+                isModeChanged = flightModeService(custom_mode='LOITER') #return true or false
+            except rospy.ServiceException, e:
+                print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
         
         
         # Display the result
