@@ -104,6 +104,7 @@
 		<arg name="log_output" 			value="$(arg log_output)" />
 		<arg name="fcu_protocol" 		value="$(arg fcu_protocol)" />
 		<arg name="respawn_mavros" 		value="$(arg respawn_mavros)" />
+		<param name="autorepeat_rate" 		value=""/>
 	</include>
 
 	<!-- This node will launch the node that bridges realsense-ros and MAVROS -->
@@ -112,6 +113,7 @@
 	<node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
 		<remap from="/image" to="/$(arg camera2)/aligned_depth_to_color/image_raw"/>
 		<remap from="/camera_info" to="/$(arg camera2)/color/camera_info"/>
+		<remap from="/scan" to="mavros/obstacle/send"/>
 		<param name="output_frame_id" 	value="$(arg camera2)_link"/>
 	</node>
 
