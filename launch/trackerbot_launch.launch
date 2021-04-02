@@ -99,9 +99,10 @@
 		<param name="output_frame_id" 	value="$(arg camera2)_link"/>
 	</node>
 
+	<remap from="/mavros/obstacle/send" to="/scan"/>
+
 	<!-- This node will launch MAVROS -->
 	<include file="$(find mavros)/launch/node.launch">
-		<remap from="/mavros/obstacle/send" to="/scan"/>
 		<arg name="pluginlists_yaml" 	value="$(find mavros)/launch/apm_pluginlists.yaml" />
 		<arg name="config_yaml" 		value="$(find mavros)/launch/apm_config.yaml" />
 		<arg name="fcu_url" 			value="$(arg fcu_url)" />
