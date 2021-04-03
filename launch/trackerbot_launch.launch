@@ -96,14 +96,6 @@
 		</include>
 	</group>
 
-	<node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
-		<remap from="/image" to="/$(arg camera2)/aligned_depth_to_color/image_raw"/>
-		<remap from="/camera_info" to="/$(arg camera2)/color/camera_info"/>
-		<param name="output_frame_id" 	value="$(arg camera2)_link"/>
-	</node>
-
-	<remap from="/mavros/obstacle/send" to="/scan"/>
-
 	<!-- This node will launch MAVROS -->
 	<include file="$(find mavros)/launch/node.launch">
 		<arg name="pluginlists_yaml" 	value="$(find mavros)/launch/apm_pluginlists.yaml" />
