@@ -23,6 +23,7 @@ class cvBridgeDemo():
 
         self.x_percent = 0.30
         self.y_percent = 0.30
+        self.mode = "LOITER"
         
         # Subscribe to the camera image and depth topics and set
         # the appropriate callbacks
@@ -52,18 +53,20 @@ class cvBridgeDemo():
 
         rospy.wait_for_service('/mavros/set_mode')
         print("hello")
-        if distance < 1:
+        if distance < 1 and self.mode == "LOITER":
             try:
                 flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
                 isModeChanged = flightModeService(custom_mode='BRAKE') #return true or false
                 print("set")
                 print(isModeChanged)
+                self.mode == "BRAKE"
             except rospy.ServiceException, e:
                 print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
-        else:
+        elif distance >= 1 and self.mode == "BRAKE":
             try:
                 flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
                 isModeChanged = flightModeService(custom_mode='LOITER') #return true or false
+                self.mode == "LOITER"
             except rospy.ServiceException, e:
                 print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
         
