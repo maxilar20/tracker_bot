@@ -68,6 +68,8 @@
 				<arg name="infra_height"          	value="$(arg color_height)"/>
 			</include>
 		</group>
+
+		<node pkg="tf" type="static_transform_publisher" name="base_link_to_t265" args="-0.05 0 0 0 0 3.1415 /base_link /$(arg tf_prefix_camera1)_link 100"/>
 		<node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="0 0 0 0 0 0 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 100"/>
 
 		<include file="$(find rtabmap_ros)/launch/rtabmap.launch" machine="base_station" if="$(arg remote_mapping)">
