@@ -70,7 +70,7 @@
 		</group>
 
 		<node pkg="tf" type="static_transform_publisher" name="base_link_to_t265" args="-0.05 0 0 3.1415 0 0  /$(arg tf_prefix_camera1)_link /base_link 100"/>
-		<node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="0.11 0 0 0 0 0.78539 /base_link /$(arg tf_prefix_camera2)_link 100"/>
+		<node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="0.11 0 0 0 0 1.5708 /base_link /$(arg tf_prefix_camera2)_link 100"/>
 
 		<include file="$(find rtabmap_ros)/launch/rtabmap.launch" machine="base_station" if="$(arg remote_mapping)">
 			<arg name="rtabmap_args"       value="--delete_db_on_start --Vis/MaxFeatures 300 --Mem/ImagePreDecimation 2 --Mem/ImagePostDecimation 2 --Kp/DetectorStrategy 6 --OdomF2M/MaxSize 800 --Odom/ImageDecimation 2"/>
