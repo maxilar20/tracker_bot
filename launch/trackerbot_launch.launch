@@ -117,6 +117,9 @@
 		<arg name="source_frame_id"   value="/base_link" />
 	<include/>
 
+	<node pkg="mavros_extras" type="copter_visualization" name="tracker_viz"/>
+	
+
 	<!-- Group that runs only if gamepad is true to control from a gamepad -->
 	<group if="$(arg gamepad)">
 		<node pkg="ds4_driver" type="ds4_driver_node.py" name="ds4_driver" output="screen" if="$(arg ps4)">
