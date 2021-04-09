@@ -55,7 +55,7 @@
 				<arg name="tf_prefix"		      	value="$(arg tf_prefix_camera2)"/>
 				<arg name="initial_reset"         	value="$(arg initial_reset)"/>
 				<arg name="align_depth"           	value="true"/>
-				<arg name="filters"               	value="pointcloud"/>
+				
 				<arg name="color_width"           	value="$(arg color_width)"/>
 				<arg name="color_height"          	value="$(arg color_height)"/>
 				<arg name="depth_width"           	value="$(arg depth_width)"/>
