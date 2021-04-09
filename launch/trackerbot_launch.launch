@@ -113,7 +113,9 @@
 	</include>
 
 	<!-- This node will launch the node that bridges realsense-ros and MAVROS -->
-	<include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch"/>
+	<include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch">
+		<arg name="source_frame_id"   value="/base_link" />
+	<include/>
 
 	<!-- Group that runs only if gamepad is true to control from a gamepad -->
 	<group if="$(arg gamepad)">
