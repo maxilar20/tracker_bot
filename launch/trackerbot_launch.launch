@@ -70,7 +70,6 @@
 		</group>
 
 		<node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="-0.16 0 0 3.1415 0 -1.5708 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 100"/>
-		<node pkg="tf" type="static_transform_publisher" name="t265_to_quad" args="-0.05 0 0 3.1415 0 0 /$(arg tf_prefix_camera1)_link /quad_frame 100"/>
 
 		<include file="$(find rtabmap_ros)/launch/rtabmap.launch" machine="base_station" if="$(arg remote_mapping)">
 			<arg name="rtabmap_args"       value="--delete_db_on_start --Vis/MaxFeatures 300 --Mem/ImagePreDecimation 2 --Mem/ImagePostDecimation 2 --Kp/DetectorStrategy 6 --OdomF2M/MaxSize 800 --Odom/ImageDecimation 2"/>
@@ -113,20 +112,17 @@
 	</include>
 
 	<!-- This node will launch the node that bridges realsense-ros and MAVROS -->
-	 <arg name="target_frame_id"   default="/camera_odom_frame" />
-    <param name="target_frame_id"   value="$(arg target_frame_id)" />
-
-    <arg name="source_frame_id"   default="/quad_frame" />
-    <param name="source_frame_id"   value="$(arg source_frame_id)" />
-	<param name="output_rate"       value="30" />
-	<param name="roll_cam"          value="0" />
-	<param name="pitch_cam"         value="0" />
-	<param name="yaw_cam"           value="0" />
-	<param name="gamma_world"       value="-1.5707963" />
+	 
 
     <node pkg="vision_to_mavros" type="vision_to_mavros_node" name="t265_to_mavros" output="screen" >
         <remap from="vision_pose" to="/mavros/vision_pose/pose" />
-		
+		<param name="target_frame_id"   value="/camera_odom_frame" />
+		<param name="source_frame_id"   value="/camera_link" />
+		<param name="output_rate"       value="30" />
+		<param name="roll_cam"          value="0" />
+		<param name="pitch_cam"         value="0" />
+		<param name="yaw_cam"           value="3.1415" />
+		<param name="gamma_world"       value="-1.5707963" />
     </node>
 
 	<!-- Group that runs only if gamepad is true to control from a gamepad -->
