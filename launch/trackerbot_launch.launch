@@ -118,7 +118,7 @@
     <arg name="source_frame_id"   default="/camera_link" />
     <param name="source_frame_id"   value="$(arg source_frame_id)" />
 	<param name="output_rate"       value="30" />
-	<param name="roll_cam"          value="0" />
+	<param name="roll_cam"          value="3.1415" />
 	<param name="pitch_cam"         value="0" />
 	<param name="yaw_cam"           value="0" />
 	<param name="gamma_world"       value="-1.5707963" />
