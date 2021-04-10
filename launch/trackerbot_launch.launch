@@ -69,7 +69,7 @@
 			</include>
 		</group>
 
-		<node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="0.16 0 0 3.1415 0 -1.5708 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 100"/>
+		<node pkg="tf" type="static_transform_publisher" name="t265_to_d400" args="-0.16 0 0 3.1415 0 -1.5708 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 100"/>
 
 		<include file="$(find rtabmap_ros)/launch/rtabmap.launch" machine="base_station" if="$(arg remote_mapping)">
 			<arg name="rtabmap_args"       value="--delete_db_on_start --Vis/MaxFeatures 300 --Mem/ImagePreDecimation 2 --Mem/ImagePostDecimation 2 --Kp/DetectorStrategy 6 --OdomF2M/MaxSize 800 --Odom/ImageDecimation 2"/>
@@ -115,7 +115,7 @@
 	<include file="$(find vision_to_mavros)/launch/t265_tf_to_mavros.launch">
 		<param name="roll_cam"          value="0" />
 		<param name="pitch_cam"         value="0" />
-		<param name="yaw_cam"           value="3.415" />
+		<param name="yaw_cam"           value="3.1415" />
 		<param name="gamma_world"       value="-1.5707963" />
 	</include>
 
