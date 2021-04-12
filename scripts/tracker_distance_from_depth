@@ -51,6 +51,7 @@ class cvBridgeDemo():
         distance = np.min(np_region[np_region > 0])/1000.0
         print("distance: " + str(distance) + " m, mode: " + self.mode)
 
+        """
         rospy.wait_for_service('/mavros/set_mode')
         if distance < 1 and self.mode == "LOITER":
             try:
@@ -71,7 +72,7 @@ class cvBridgeDemo():
             except rospy.ServiceException, e:
                 print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
         
-        
+        """
         # Display the result
         #cv2.imshow("Depth Image", depth_image)
         #cv2.waitKey(1)
