@@ -8,6 +8,7 @@ from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
 from mavros_msgs.srv import *
 import numpy as np
+import time 
 
 class cvBridgeDemo():
     def __init__(self):
@@ -35,6 +36,8 @@ class cvBridgeDemo():
     def depth_callback(self, ros_image):
         # The depth image is a single-channel float32 image
         depth_image = self.bridge.imgmsg_to_cv2(ros_image)
+
+        start = time.time()
         np_image = np.array(depth_image)
         
 
@@ -49,7 +52,8 @@ class cvBridgeDemo():
         np_region = np_image[min_x:max_x, min_y:max_y]
         #print(np_region.shape)
         distance = np.min(np_region[np_region > 0])/1000.0
-        print("distance: " + str(distance) + " m, mode: " + self.mode)
+        print()
+        print("time: " + str(time.time() - start) + distance: " + str(distance) + " m, mode: " + self.mode)
 
         """
         rospy.wait_for_service('/mavros/set_mode')
