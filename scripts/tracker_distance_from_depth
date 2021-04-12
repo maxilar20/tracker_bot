@@ -25,6 +25,7 @@ class cvBridgeDemo():
         self.x_percent = 0.30
         self.y_percent = 0.30
         self.mode = "LOITER"
+        self.dist = 0.5
         
         # Subscribe to the camera image and depth topics and set
         # the appropriate callbacks
@@ -55,28 +56,26 @@ class cvBridgeDemo():
         print()
         print("time: " + str(time.time() - start) + "distance: " + str(distance) + " m, mode: " + self.mode)
 
-        """
         rospy.wait_for_service('/mavros/set_mode')
-        if distance < 1 and self.mode == "LOITER":
+        if distance < self.dist and self.mode == "LOITER":
             try:
                 flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
                 isModeChanged = flightModeService(custom_mode='BRAKE') #return true or false
-                print("set brake")
-                print(isModeChanged)
-                self.mode = "BRAKE"
+                if isModeChanged:
+                    print("set brake")
+                    self.mode = "BRAKE"
             except rospy.ServiceException, e:
                 print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
-        elif distance >= 1 and self.mode == "BRAKE":
+        elif distance >= self.dist and self.mode == "BRAKE":
             try:
                 flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
                 isModeChanged = flightModeService(custom_mode='LOITER') #return true or false
-                print("set loiter")
-                print(isModeChanged)
-                self.mode = "LOITER"
+                if isModeChanged:
+                    print("set loiter")
+                    self.mode = "LOITER"
             except rospy.ServiceException, e:
                 print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
-        
-        """
+
         # Display the result
         #cv2.imshow("Depth Image", depth_image)
         #cv2.waitKey(1)
