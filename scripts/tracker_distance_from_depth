@@ -38,7 +38,7 @@ class cvBridgeDemo():
         rospy.loginfo("Waiting for image topics...")
 
     def rc_callback(self, msg):
-        print(msg)
+        print(msg.channels[4])
                
     def depth_callback(self, ros_image):
         # The depth image is a single-channel float32 image
