@@ -67,7 +67,7 @@ class cvBridgeDemo():
 
         
         rospy.wait_for_service('/mavros/set_mode')
-        if distance < self.dist and self.mode == "LOITER":
+        if distance < self.dist and self.mode == "LOITER" and rc_mode == True:
             try:
                 flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
                 isModeChanged = flightModeService(custom_mode='BRAKE') #return true or false
@@ -76,7 +76,7 @@ class cvBridgeDemo():
                     self.mode = "BRAKE"
             except rospy.ServiceException, e:
                 print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
-        elif distance >= self.dist and self.mode == "BRAKE":
+        elif self.rc_mode == False and self.mode == "BRAKE":
             try:
                 flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
                 isModeChanged = flightModeService(custom_mode='LOITER') #return true or false
