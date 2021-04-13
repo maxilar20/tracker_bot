@@ -61,7 +61,7 @@ class cvBridgeDemo():
         np_region = np_image[min_y:max_y, min_x:max_x]
         #print(np_region.shape)
         distance = np.min(np_region[np_region > 170])/1000.0
-        print("time: " + str(time.time() - start) + "distance: " + str(distance) + " m, mode: " + self.mode)
+        print("distance: " + str(distance) + " m, mode: " + self.mode)
 
         
         rospy.wait_for_service('/mavros/set_mode')
