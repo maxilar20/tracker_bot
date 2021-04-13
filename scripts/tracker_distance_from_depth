@@ -23,7 +23,7 @@ class cvBridgeDemo():
         self.bridge = CvBridge()
 
         self.x_percent = 0.30
-        self.y_percent = 0.30
+        self.y_percent = 0
         self.mode = "LOITER"
         self.dist = 0.5
         
@@ -50,12 +50,10 @@ class cvBridgeDemo():
         
         #print(min_x, max_x, min_y, max_y)
         
-        np_region = np_image[min_x:max_x, min_y:max_y]
+        np_region = np_image[min_y:max_y, min_x:max_x]
         #print(np_region.shape)
-        distance = np.min(np_region[np_region > 0])/1000.0
-        print()
-        print("time: " + str(time.time() - start) + "distance: " + str(distance) + " m, mode: " + self.mode)
-
+        distance = np.min(np_region[np_region > 170])/1000.0
+                
         rospy.wait_for_service('/mavros/set_mode')
         if distance < self.dist and self.mode == "LOITER":
             try:
@@ -75,10 +73,10 @@ class cvBridgeDemo():
                     self.mode = "LOITER"
             except rospy.ServiceException, e:
                 print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
-
+        
         # Display the result
-        #cv2.imshow("Depth Image", depth_image)
-        #cv2.waitKey(1)
+        cv2.imshow("Depth Image", np_region)
+        cv2.waitKey(1)
     
     def cleanup(self):
         print "Shutting down vision node."
