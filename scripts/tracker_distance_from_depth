@@ -51,8 +51,6 @@ class cvBridgeDemo():
         start = time.time()
         np_image = np.array(depth_image)
         
-        print(self.rc_mode)
-        
         min_x = int(np_image.shape[0]*self.x_percent)
         max_x = int(np_image.shape[0]*(1-self.x_percent))
         min_y = int(np_image.shape[1]*self.y_percent)
