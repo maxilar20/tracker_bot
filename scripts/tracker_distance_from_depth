@@ -67,7 +67,7 @@ class cvBridgeDemo():
 
         
         rospy.wait_for_service('/mavros/set_mode')
-        if distance < self.dist and self.mode == "LOITER" and rc_mode == True:
+        if distance < self.dist and self.mode == "LOITER" and self.rc_mode == True:
             try:
                 flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
                 isModeChanged = flightModeService(custom_mode='BRAKE') #return true or false
