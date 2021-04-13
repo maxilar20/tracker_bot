@@ -7,7 +7,7 @@ import cv2
 from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
 from mavros_msgs.srv import *
-import mavros_msgs
+from mavros_msgs.msg import RCIn
 import numpy as np
 import time 
 
@@ -32,7 +32,7 @@ class cvBridgeDemo():
         # the appropriate callbacks
         self.depth_sub = rospy.Subscriber("/d400/depth/image_rect_raw", Image, self.depth_callback)
 
-        self.rc_sub = rospy.Subscriber("/mavros/rc/in", mavros_msgs.RCIn, self.rc_callback)
+        self.rc_sub = rospy.Subscriber("/mavros/rc/in", RCIn, self.rc_callback)
         self.rc_mode = "sensing"
         
         rospy.loginfo("Waiting for image topics...")
