@@ -33,12 +33,16 @@ class cvBridgeDemo():
         self.depth_sub = rospy.Subscriber("/d400/depth/image_rect_raw", Image, self.depth_callback)
 
         self.rc_sub = rospy.Subscriber("/mavros/rc/in", RCIn, self.rc_callback)
-        self.rc_mode = "sensing"
+        self.rc_mode = False
         
         rospy.loginfo("Waiting for image topics...")
 
     def rc_callback(self, msg):
-        print(msg.channels[4])
+        channel_val = msg.channels[4]
+        if channel_val > 900 and channel_val < 1100:
+            self.rc_mode = False
+        elif channel_val > 1900 and channel_val < 2100:
+            self.rc_mode = True
                
     def depth_callback(self, ros_image):
         # The depth image is a single-channel float32 image
@@ -47,7 +51,7 @@ class cvBridgeDemo():
         start = time.time()
         np_image = np.array(depth_image)
         
-
+        print(self.rc_mode)
         
         min_x = int(np_image.shape[0]*self.x_percent)
         max_x = int(np_image.shape[0]*(1-self.x_percent))
