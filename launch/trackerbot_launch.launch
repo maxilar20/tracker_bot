@@ -63,9 +63,6 @@
 				<arg name="clip_distance"         	value="$(arg clip_distance)"/>
 				<arg name="depth_fps"           	value="$(arg depth_fps)"/>
 				<arg name="color_fps"           	value="$(arg color_fps)"/>	
-				<arg name="infra_fps"           	value="$(arg color_fps)"/>	
-				<arg name="infra_width"           	value="$(arg color_width)"/>
-				<arg name="infra_height"          	value="$(arg color_height)"/>
 			</include>
 		</group>
 
