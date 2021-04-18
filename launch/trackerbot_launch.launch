@@ -122,7 +122,7 @@
         <remap from="vision_pose" to="/mavros/vision_pose/pose" />
     </node>
 
-	<node pkg="tracker_bot" type="tracker_distance_from_depth" name="obstacle_avoidance" output="screen" />
+	<node pkg="tracker_bot" type="tracker_distance_from_depth" name="obstacle_avoidance" output="screen" if="$(arg remote_mapping)"/>
 
 	<!-- Group that runs only if gamepad is true to control from a gamepad -->
 	<group if="$(arg gamepad)">
