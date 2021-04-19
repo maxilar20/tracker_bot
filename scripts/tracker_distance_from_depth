@@ -55,11 +55,12 @@ class cvBridgeDemo():
             max_y = int(np_image.shape[1]*(1-self.y_percent))
             
             np_region = np_image[min_y:max_y, min_x:max_x]
-            if np_region.size > 0:
-                distance = np.min(np_region[np_region > 170])/1000.0
-                print("distance: " + str(distance) + " m, mode: " + self.mode)
+            threshold = np_region[np_region > 170]
+            if threshold.size > 0:
+                distance = np.min(threshold)/1000.0
             else:
                 distance = 1.5
+            print("distance: " + str(distance) + " m, mode: " + self.mode)
 
             
             rospy.wait_for_service('/mavros/set_mode')
