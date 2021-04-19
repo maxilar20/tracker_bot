@@ -26,7 +26,7 @@ class cvBridgeDemo():
         self.x_percent = 0.30
         self.y_percent = 0
         self.mode = "LOITER"
-        self.dist = 1
+        self.dist = 0.5
         
         # Subscribe to the camera image and depth topics and set
         # the appropriate callbacks
