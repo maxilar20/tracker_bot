@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot name="trackerbot">
+  <link name="center_link">
+      <visual>
+        <origin rpy="1.5707 0 0" xyz="-0.25 0.25 0"/>
+        <geometry>
+          <mesh filename="package://tracker_bot/meshes/trackerbot_model.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+</robot>
