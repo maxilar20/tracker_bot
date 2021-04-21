@@ -6,7 +6,10 @@ import sys
 import cv2
 from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
+from mavros_msgs.srv import *
+from mavros_msgs.msg import RCIn
 import numpy as np
+import time 
 
 class cvBridgeDemo():
     def __init__(self):
@@ -21,37 +24,68 @@ class cvBridgeDemo():
         self.bridge = CvBridge()
 
         self.x_percent = 0.30
-        self.y_percent = 0.30
+        self.y_percent = 0
+        self.mode = "LOITER"
+        self.dist = 0.5
         
         # Subscribe to the camera image and depth topics and set
         # the appropriate callbacks
-        self.depth_sub = rospy.Subscriber("/camera/depth/image_rect_raw", Image, self.depth_callback)
+        self.depth_sub = rospy.Subscriber("/d400/depth/image_rect_raw", Image, self.depth_callback)
+
+        self.rc_sub = rospy.Subscriber("/mavros/rc/in", RCIn, self.rc_callback)
+        self.rc_mode = False
         
         rospy.loginfo("Waiting for image topics...")
 
+    def rc_callback(self, msg):
+        channel_val = msg.channels[4]
+        if channel_val > 900 and channel_val < 1100:
+            self.rc_mode = False
+        elif channel_val > 1900 and channel_val < 2100:
+            self.rc_mode = True
                
     def depth_callback(self, ros_image):
         # The depth image is a single-channel float32 image
-        depth_image = self.bridge.imgmsg_to_cv2(ros_image)
-        np_image = np.array(depth_image)
-        
+        np_image = self.bridge.imgmsg_to_cv2(ros_image)
+        if np_image.size > 0:
+           
+            min_x = int(np_image.shape[0]*self.x_percent)
+            max_x = int(np_image.shape[0]*(1-self.x_percent))
+            min_y = int(np_image.shape[1]*self.y_percent)
+            max_y = int(np_image.shape[1]*(1-self.y_percent))
+            
+            np_region = np_image[min_y:max_y, min_x:max_x]
+            threshold = np_region[np_region > 170]
+            if threshold.size > 0:
+                distance = np.min(threshold)/1000.0
+            else:
+                distance = 1.5
+            print("distance: " + str(distance) + " m, mode: " + self.mode)
 
-        
-        min_x = int(np_image.shape[0]*self.x_percent)
-        max_x = int(np_image.shape[0]*(1-self.x_percent))
-        min_y = int(np_image.shape[1]*self.y_percent)
-        max_y = int(np_image.shape[1]*(1-self.y_percent))
-        
-        #print(min_x, max_x, min_y, max_y)
-        
-        np_region = np_image[min_x:max_x, min_y:max_y]
-        #print(np_region.shape)
-        print("distance: " + str(np.min(np_region[np_region > 0])/1000.0) + " m")
-        
-        
-        # Display the result
-        #cv2.imshow("Depth Image", depth_image)
-        #cv2.waitKey(1)
+            
+            rospy.wait_for_service('/mavros/set_mode')
+            if distance < self.dist and self.mode == "LOITER" and self.rc_mode == True:
+                try:
+                    flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
+                    isModeChanged = flightModeService(custom_mode='BRAKE') #return true or false
+                    if isModeChanged:
+                        print("set brake")
+                        self.mode = "BRAKE"
+                except rospy.ServiceException, e:
+                    print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
+            elif self.rc_mode == False and self.mode == "BRAKE":
+                try:
+                    flightModeService = rospy.ServiceProxy('/mavros/set_mode', mavros_msgs.srv.SetMode)
+                    isModeChanged = flightModeService(custom_mode='LOITER') #return true or false
+                    if isModeChanged:
+                        print("set loiter")
+                        self.mode = "LOITER"
+                except rospy.ServiceException, e:
+                    print "service set_mode call failed: %s. GUIDED Mode could not be set. Check that GPS is enabled"%e
+            
+            # Display the result
+            #cv2.imshow("Depth Image", np_region)
+            #cv2.waitKey(1)
     
     def cleanup(self):
         print "Shutting down vision node."
