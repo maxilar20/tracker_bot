@@ -3,7 +3,7 @@
 	At development stage, each node should be launched in a separated terminal to view the output -->
 
 	<arg name="remote"				default="10.0.0.79" />
-	<arg name="mapping" 			default="false" />
+	<arg name="mapping" 			default="true" />
 	<arg name="remote_mapping" 		default="false" />
 	<arg name="gamepad" 			default="false" />
 	<arg name="ps4" 				default="false" />
